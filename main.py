@@ -2,6 +2,7 @@ import datetime
 import os
 import importlib
 import timeit
+import zipfile
 
 import src.main as hashCodeImpl
 # Python scripts runner for various files
@@ -17,7 +18,6 @@ def run():
         print("Please choose an option:")
         files = [f for f in os.listdir(DATA_LOCATION) if os.path.isfile(os.path.join(DATA_LOCATION, f))]
         action = getAction(files)
-        importlib.reload(hashCodeImpl)
         
         if action == "allFiles":
             for a_file in files:
@@ -28,9 +28,6 @@ def run():
             for a_file in files:
                 runForFile(os.path.join(DATA_LOCATION, a_file), OUTPUT_LOCATION)
             zipProject(OUTPUT_LOCATION)
-        elif action == "blank":
-            print("")
-            continue
         else:
             runForFile(os.path.join(DATA_LOCATION, action), OUTPUT_LOCATION)
 
@@ -41,19 +38,21 @@ def getAction(files):
     for a_file in files:
         print("[" + str(count) + "]", a_file)
         count += 1
-    print("[" + str(count) + "]", "All Files")
+    print("[" + str(count) + "]", "Run for all Files")
     options.append("allFiles")
     count += 1
-    print("[" + str(count) + "]", "Zip Code")
+    print("[" + str(count) + "]", "Zip source")
     options.append("zip")
     count += 1
-    print("[" + str(count) + "]", "All files and Zip Code")
+    print("[" + str(count) + "]", "Run for all files and zip source")
     options.append("allFilesAndZip")
-    print("")
 
-    choice = input()
-    if choice == "":
-        return "blank"
+    choice = ""
+    while choice == "":
+       print("")
+       # Reload our source incase we have made any changes
+       importlib.reload(hashCodeImpl)
+       choice = input()
     action = options[int(choice)-1]
     return action
 
@@ -68,6 +67,16 @@ def runForFile(file_location, output_location):
 
 def zipProject(output_location):
     print("Zipping project and saving to", output_location)
+    now = datetime.datetime.now()
+
+    zipf = zipfile.ZipFile(OUTPUT_LOCATION + "\hashCode" + str(now.year) + ".zip", "w", zipfile.ZIP_DEFLATED)
+    for root, dirs, files in os.walk(".\src"):
+        for file in files:
+            filename = os.path.join(root, file)
+            # Ingore the top level init file, as this is only needed by the code runner
+            if filename != ".\src\__init__.py":
+                zipf.write(filename, filename.replace(".\src\\", ".\\"))
+    zipf.close()
 
 
 # When run from the terminal

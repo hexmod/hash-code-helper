@@ -1,7 +1,14 @@
+###############################
+##
+## HASH CODE ENTRY
+##
+## Usage: python main.py <path_to_source_file> <output_location>
+##
+###############################
 import sys
 
 def main(file_location, output_location):
-    print("Hash Code Entry")
+    print("Running Hash Code Entry")
     # Hash Code here :)
 
 
