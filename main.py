@@ -70,10 +70,13 @@ def zipProject(output_location):
     now = datetime.datetime.now()
 
     zipf = zipfile.ZipFile(OUTPUT_LOCATION + "\hashCode" + str(now.year) + ".zip", "w", zipfile.ZIP_DEFLATED)
+    # Add our Pipfile, so any deps can be downloaded
+    zipf.write(".\Pipfile")
+    zipf.write(".\Pipfile.lock")
     for root, dirs, files in os.walk(".\src"):
         for file in files:
             filename = os.path.join(root, file)
-            # Ingore the top level init file, as this is only needed by the code runner
+            # Ignore the top level init file, as this is only needed by the code runner
             if filename != ".\src\__init__.py":
                 zipf.write(filename, filename.replace(".\src\\", ".\\"))
     zipf.close()
