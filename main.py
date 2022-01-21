@@ -10,23 +10,27 @@ import src.main as hashCodeImpl
 DATA_LOCATION = ".\data"
 OUTPUT_LOCATION = ".\output"
 
+
 def run():
     now = datetime.datetime.now()
     print("Hash Code Runner - Welcome to Hash Code", now.year)
 
     while True:
         print("Please choose an option:")
-        files = [f for f in os.listdir(DATA_LOCATION) if os.path.isfile(os.path.join(DATA_LOCATION, f))]
+        files = [f for f in os.listdir(DATA_LOCATION) if os.path.isfile(
+            os.path.join(DATA_LOCATION, f))]
         action = getAction(files)
-        
+
         if action == "allFiles":
             for a_file in files:
-                runForFile(os.path.join(DATA_LOCATION, a_file), OUTPUT_LOCATION)
+                runForFile(os.path.join(
+                    DATA_LOCATION, a_file), OUTPUT_LOCATION)
         elif action == "zip":
             zipProject(OUTPUT_LOCATION)
         elif action == "allFilesAndZip":
             for a_file in files:
-                runForFile(os.path.join(DATA_LOCATION, a_file), OUTPUT_LOCATION)
+                runForFile(os.path.join(
+                    DATA_LOCATION, a_file), OUTPUT_LOCATION)
             zipProject(OUTPUT_LOCATION)
         else:
             runForFile(os.path.join(DATA_LOCATION, action), OUTPUT_LOCATION)
@@ -49,10 +53,10 @@ def getAction(files):
 
     choice = ""
     while choice == "":
-       print("")
-       # Reload our source incase we have made any changes
-       importlib.reload(hashCodeImpl)
-       choice = input()
+        print("")
+        # Reload our source incase we have made any changes
+        importlib.reload(hashCodeImpl)
+        choice = input()
     action = options[int(choice)-1]
     return action
 
@@ -69,7 +73,8 @@ def zipProject(output_location):
     print("Zipping project and saving to", output_location)
     now = datetime.datetime.now()
 
-    zipf = zipfile.ZipFile(OUTPUT_LOCATION + "\hashCode" + str(now.year) + ".zip", "w", zipfile.ZIP_DEFLATED)
+    zipf = zipfile.ZipFile(OUTPUT_LOCATION + "\hashCode" +
+                           str(now.year) + ".zip", "w", zipfile.ZIP_DEFLATED)
     # Add our Pipfile, so any deps can be downloaded
     zipf.write(".\Pipfile")
     zipf.write(".\Pipfile.lock")
