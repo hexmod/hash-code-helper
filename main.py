@@ -7,8 +7,8 @@ import zipfile
 import src.main as hashCodeImpl
 # Python scripts runner for various files
 
-DATA_LOCATION = ".\data"
-OUTPUT_LOCATION = ".\output"
+DATA_LOCATION = ".\\data"
+OUTPUT_LOCATION = ".\\output"
 
 
 def run():
@@ -57,7 +57,7 @@ def getAction(files):
         # Reload our source incase we have made any changes
         importlib.reload(hashCodeImpl)
         choice = input()
-    action = options[int(choice)-1]
+    action = options[int(choice) - 1]
     return action
 
 
@@ -73,17 +73,17 @@ def zipProject(output_location):
     print("Zipping project and saving to", output_location)
     now = datetime.datetime.now()
 
-    zipf = zipfile.ZipFile(OUTPUT_LOCATION + "\hashCode" +
-                           str(now.year) + ".zip", "w", zipfile.ZIP_DEFLATED)
+    zipf = zipfile.ZipFile(OUTPUT_LOCATION + "\\hashCode"
+                           + str(now.year) + ".zip", "w", zipfile.ZIP_DEFLATED)
     # Add our Pipfile, so any deps can be downloaded
-    zipf.write(".\Pipfile")
-    zipf.write(".\Pipfile.lock")
-    for root, dirs, files in os.walk(".\src"):
+    zipf.write(".\\Pipfile")
+    zipf.write(".\\Pipfile.lock")
+    for root, dirs, files in os.walk(".\\src"):
         for file in files:
             filename = os.path.join(root, file)
             # Ignore the top level init file, as this is only needed by the code runner
-            if filename != ".\src\__init__.py":
-                zipf.write(filename, filename.replace(".\src\\", ".\\"))
+            if filename != ".\\src\\__init__.py":
+                zipf.write(filename, filename.replace(".\\src\\", ".\\"))
     zipf.close()
 
 
