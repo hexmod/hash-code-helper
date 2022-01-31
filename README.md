@@ -1,27 +1,33 @@
 # Hash Code Helper
 
-Helper scripts for running hash code problems
+Helper scripts for developing and running hash code problems.
 
-Use this repository to create a new repository for you Hash Code entry. This newly created repository will contain a folder in which to write your submission. Submissions written in the folder can then be run and managed by the `main.py` file that will be located alongside the `submission` folder.
-
-The created repository contains a `main.py` file that allows you to do the folloing:
-- Run your sumbission for a single data file
-- Run your submission for all data files
-- Zip your submission
-- Run for all files and zip your submission 
-
-## Usage
-1. Clone this repository
-1. Run `pipenv run python setup.py <new-repo-location>`
-1. A new repository at `<new-repo-location>` is created. See the README file in this location for usage instructions.
-
-## Tests
-Test for the Hash Code helper are located in the `test` directory. These can be run using the following command:
+Use this repository to create a new repository for your Hash Code entry by clicking the 'Use this template' button within GitHub to create a new repository that contains all the files within this repository.
 
 ## Contributing
 All contributions are welcome. Submissions should conform to PEP8 styling standards.
 
+---
+
+# Google Hash Code
+
+Google Hash Code Entry. The submission is contained within the `src` folder can be run using the below instructions.
+The `main.py` file contains helper functions for use when developing the submission, this script is not intended to be part of the submission.
+
+## Usage
+* Save the competition data files in the data folder
+* `pipenv install` - Install dependencies
+* `pipenv run python main.py` - Run the helper script
+
+Once the helper script is running, the following options are available:
+- Run the submission for a single data file
+- Run the submission for all data files
+- Zip the submission code
+- Run for all files and zip the submission 
+
 ## Dependancies
 * Python version 3.7.2 or higher
 * pipenv
-* Git
+
+---
+Created using the [Hash Code Helper](https://github.com/hexmod/hash-code-helper)
