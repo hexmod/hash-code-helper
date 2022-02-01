@@ -1,6 +1,7 @@
 # Project Stuff
-/data
-/output
+data/*
+!data/readme.txt
+output/
 
 # Vscode Stuff
 .vscode/

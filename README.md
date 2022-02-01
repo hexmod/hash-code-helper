@@ -15,7 +15,7 @@ Google Hash Code Entry. The submission is contained within the `src` folder can 
 The `main.py` file contains helper functions for use when developing the submission, this script is not intended to be part of the submission.
 
 ## Usage
-* Save the competition data files in the data folder
+* Save the competition data files in the `data` folder
 * `pipenv install` - Install dependencies
 * `pipenv run python main.py` - Run the helper script
 

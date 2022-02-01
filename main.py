@@ -14,67 +14,95 @@ OUTPUT_LOCATION = ".\\output"
 def run():
     now = datetime.datetime.now()
     print("Hash Code Runner - Welcome to Hash Code", now.year)
+    repl()
 
+
+def repl():
     while True:
+        refresh_source()
         print("Please choose an option:")
-        files = [f for f in os.listdir(DATA_LOCATION) if os.path.isfile(
-            os.path.join(DATA_LOCATION, f))]
-        action = getAction(files)
+        data_files = get_data_files()
+        (action, param) = get_action(data_files)
 
-        if action == "allFiles":
-            for a_file in files:
-                runForFile(os.path.join(
-                    DATA_LOCATION, a_file), OUTPUT_LOCATION)
+        if action == "singleFile":
+            run_for_file(get_file_path(param), OUTPUT_LOCATION)
+        elif action == "allFiles":
+            for a_file in data_files:
+                run_for_file(get_file_path(a_file), OUTPUT_LOCATION)
         elif action == "zip":
-            zipProject(OUTPUT_LOCATION)
+            zip_project(OUTPUT_LOCATION)
         elif action == "allFilesAndZip":
-            for a_file in files:
-                runForFile(os.path.join(
-                    DATA_LOCATION, a_file), OUTPUT_LOCATION)
-            zipProject(OUTPUT_LOCATION)
-        else:
-            runForFile(os.path.join(DATA_LOCATION, action), OUTPUT_LOCATION)
+            for a_file in data_files:
+                run_for_file(get_file_path(a_file), OUTPUT_LOCATION)
+            zip_project(OUTPUT_LOCATION)
 
 
-def getAction(files):
-    options = files.copy()
+def get_file_path(a_file):
+    return os.path.join(DATA_LOCATION, a_file)
+
+
+def refresh_source():
+    # Reload our source in case we have made any changes
+    importlib.reload(hashCodeImpl)
+
+
+def get_data_files():
+    data_files = []
+    for file_name in os.listdir(DATA_LOCATION):
+        if file_name != "readme.txt" and os.path.isfile(os.path.join(DATA_LOCATION, file_name)):
+            data_files.append(file_name)
+    return data_files
+
+
+def get_action(data_files):
+    options = [("doNothing", None)]
     count = 1
-    for a_file in files:
+    for a_file in data_files:
         print("[" + str(count) + "]", a_file)
+        options.append(("singleFile", a_file))
         count += 1
+
     print("[" + str(count) + "]", "Run for all Files")
-    options.append("allFiles")
+    options.append(("allFiles", None))
     count += 1
+
     print("[" + str(count) + "]", "Zip source")
-    options.append("zip")
+    options.append(("zip", None))
     count += 1
+
     print("[" + str(count) + "]", "Run for all files and zip source")
-    options.append("allFilesAndZip")
+    options.append(("allFilesAndZip", None))
 
-    choice = ""
-    while choice == "":
-        print("")
-        # Reload our source incase we have made any changes
-        importlib.reload(hashCodeImpl)
-        choice = input()
-    action = options[int(choice) - 1]
-    return action
+    user_choice = input()
+    return options[convert_input_to_option(user_choice, len(options))]
 
 
-def runForFile(file_location, output_location):
+def convert_input_to_option(input, upper_bound):
+    try:
+        option_num = int(input)
+        if option_num > 0 and option_num < upper_bound:
+            return option_num
+        else:
+            return 0
+    except:
+        return 0  # Do Nothing
+
+
+def run_for_file(file_location, output_location):
     print("Running hash code entry against", file_location)
     start = timeit.timeit()
     hashCodeImpl.main(file_location, output_location)
     end = timeit.timeit()
     print("Ran in:", end - start, "seconds")
+    print()
 
 
-def zipProject(output_location):
+def zip_project(output_location):
     print("Zipping project and saving to", output_location)
     now = datetime.datetime.now()
 
-    zipf = zipfile.ZipFile(OUTPUT_LOCATION + "\\hashCode"
-                           + str(now.year) + ".zip", "w", zipfile.ZIP_DEFLATED)
+    zip_name = OUTPUT_LOCATION + "\\hashCode" + str(now.year) + ".zip"
+    zipf = zipfile.ZipFile(zip_name, "w", zipfile.ZIP_DEFLATED)
     # Add our Pipfile, so any deps can be downloaded
     zipf.write(".\\Pipfile")
     zipf.write(".\\Pipfile.lock")
@@ -85,6 +113,7 @@ def zipProject(output_location):
             if filename != ".\\src\\__init__.py":
                 zipf.write(filename, filename.replace(".\\src\\", ".\\"))
     zipf.close()
+    print()
 
 
 # When run from the terminal
