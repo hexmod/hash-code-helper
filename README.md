@@ -29,5 +29,5 @@ Once the helper script is running, the following options are available:
 * Python version 3.7.2 or higher
 * pipenv
 
----
+
 Created using the [Hash Code Helper](https://github.com/hexmod/hash-code-helper)
