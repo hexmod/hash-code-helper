@@ -1,7 +1,7 @@
 import datetime
-import os
 import importlib
-import timeit
+import os
+import time
 import zipfile
 
 import src.main as hashCodeImpl
@@ -90,10 +90,12 @@ def convert_input_to_option(input, upper_bound):
 
 def run_for_file(file_location, output_location):
     print("Running hash code entry against", file_location)
-    start = timeit.timeit()
+    start = time.time_ns()
+
     hashCodeImpl.main(file_location, output_location)
-    end = timeit.timeit()
-    print("Ran in:", end - start, "seconds")
+
+    end = time.time_ns()
+    print("Ran in:", (end - start)/1000000000, "seconds")
     print()
 
 
