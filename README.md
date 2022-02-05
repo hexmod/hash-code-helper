@@ -12,12 +12,12 @@ All contributions are welcome. Submissions should conform to PEP8 styling standa
 # Google Hash Code
 
 Google Hash Code Entry. The submission is contained within the `src` folder can be run using the below instructions.
-The `main.py` file contains helper functions for use when developing the submission, this script is not intended to be part of the submission.
+The `helper.py` file contains helper functions for use when developing the submission, this script is not intended to be part of the submission.
 
 ## Usage
 * Save the competition data files in the `data` folder
 * `pipenv install` - Install dependencies
-* `pipenv run python main.py` - Run the helper script
+* `pipenv run python helper.py` - Run the helper script
 
 Once the helper script is running, the following options are available:
 - Run the submission for a single data file

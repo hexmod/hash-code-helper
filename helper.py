@@ -1,11 +1,17 @@
 import datetime
 import importlib
 import os
+import pkgutil
+import sys
 import time
 import zipfile
 
-import src.main as hashCodeImpl
-# Python scripts runner for various files
+# Add the src folder to the path to allow the submission to import
+# files in the src folder
+sys.path.append(os.path.join(os.path.dirname(__file__), "src"))
+# Import the entry point for our submission
+import main as hashCodeImp
+
 
 DATA_LOCATION = ".\\data"
 OUTPUT_LOCATION = ".\\output"
@@ -19,10 +25,10 @@ def run():
 
 def repl():
     while True:
-        refresh_source()
         print("Please choose an option:")
         data_files = get_data_files()
         (action, param) = get_action(data_files)
+        refresh_source()
 
         if action == "singleFile":
             run_for_file(get_file_path(param), OUTPUT_LOCATION)
@@ -43,7 +49,10 @@ def get_file_path(a_file):
 
 def refresh_source():
     # Reload our source in case we have made any changes
-    importlib.reload(hashCodeImpl)
+    importlib.reload(hashCodeImp)
+    for _, name, _ in pkgutil.iter_modules(['src']):
+        if name in sys.modules:
+            importlib.reload(sys.modules[name])
 
 
 def get_data_files():
@@ -90,9 +99,10 @@ def convert_input_to_option(input, upper_bound):
 
 def run_for_file(file_location, output_location):
     print("Running hash code entry against", file_location)
+    print()
     start = time.time_ns()
 
-    hashCodeImpl.main(file_location, output_location)
+    hashCodeImp.run(file_location, output_location)
 
     end = time.time_ns()
     print("Ran in:", (end - start)/1000000000, "seconds")
