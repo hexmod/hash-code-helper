@@ -25,7 +25,7 @@ Once the helper script is running, the following options are available:
 - Zip the submission code
 - Run for all files and zip the submission 
 
-## Dependancies
+## Dependencies
 * Python version 3.7.2 or higher
 * pipenv
 
