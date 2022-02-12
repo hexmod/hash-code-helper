@@ -21,7 +21,7 @@ def do_with_cache(input_file_location, identifier, param):
     #
     input_file_name = os.path.basename(input_file_location).split(".")[0]
     cache_file = os.path.join(
-        ".\cache", input_file_name + "_" + identifier + ".pkl")
+        ".\\cache", input_file_name + "_" + identifier + ".pkl")
 
     if os.path.isfile(cache_file):
         print(f"Using Cache for {identifier}")

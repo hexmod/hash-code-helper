@@ -93,7 +93,7 @@ def convert_input_to_option(input, upper_bound):
             return option_num
         else:
             return 0
-    except:
+    except ValueError:
         return 0  # Do Nothing
 
 
@@ -108,7 +108,7 @@ def run_for_file(file_location, output_location):
     print()
     print("-----------------")
     end = time.time_ns()
-    print("Ran in:", (end - start)/1000000000, "seconds")
+    print("Ran in:", (end - start) / 1000000000, "seconds")
     print()
 
 

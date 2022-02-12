@@ -5,8 +5,9 @@ scanner:
 pycodestyle:  # Same as scanner.linter value. Other option is flake8
     max-line-length: 100  # Default is 79 in PEP 8
     ignore:  # Errors and warnings to ignore
-        - E741  # ambiguous variable name
-        - W503  # line break before binary operator
+        - E741  # Ambiguous variable name
+        - E402  # Module level import not at top of file
+        - W503  # Line break before binary operator
 
 no_blank_comment: True  # If True, no comment is made on PR without any errors.
 descending_issues_order: False  # If True, PEP 8 issues in message will be displayed in descending order of line numbers in the file
