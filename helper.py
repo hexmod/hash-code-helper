@@ -99,11 +99,14 @@ def convert_input_to_option(input, upper_bound):
 
 def run_for_file(file_location, output_location):
     print("Running hash code entry against", file_location)
+    print("-----------------")
     print()
     start = time.time_ns()
 
     hashCodeImp.run(file_location, output_location)
 
+    print()
+    print("-----------------")
     end = time.time_ns()
     print("Ran in:", (end - start)/1000000000, "seconds")
     print()
